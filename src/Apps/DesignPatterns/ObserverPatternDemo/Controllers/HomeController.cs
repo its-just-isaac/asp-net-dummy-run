@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ObserverPatternDemo.Models;
+using ObserverPatternDemo.Services;
 
 namespace ObserverPatternDemo.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly PaymentService _paymentService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, PaymentService paymentService)
         {
             _logger = logger;
+            _paymentService = paymentService;
         }
 
         public IActionResult Index()
@@ -25,6 +24,8 @@ namespace ObserverPatternDemo.Controllers
 
         public IActionResult Privacy()
         {
+            _paymentService.ProcessPayment();
+
             return View();
         }
 
